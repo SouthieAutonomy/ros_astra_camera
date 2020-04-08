@@ -119,6 +119,8 @@ private:
   bool setIRFloodCb(astra_camera::SetIRFloodRequest& req, astra_camera::SetIRFloodResponse& res);
   bool switchIRCameraCb(astra_camera::SwitchIRCameraRequest& req, astra_camera::SwitchIRCameraResponse& res);
   bool setLDPCb(astra_camera::SetLDPRequest& req, astra_camera::SetLDPResponse& res);
+  bool setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, astra_camera::SetCameraStreamResponse& res);
+
 
   void configCb(Config &config, uint32_t level);
 

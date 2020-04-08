@@ -244,7 +244,7 @@ void AstraDriver::advertiseROSTopics()
   }
 }
 
-bool AstraDriver::setCameraStreamCb(astra_camera::setCameraStreamRequest &req, astra_camera::setCameraStreamResponse& res){
+bool AstraDriver::setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, astra_camera::SetCameraStreamResponse& res){
   if (req.value){ device_->startStream(req.stream); }
   if (!req.value){ device_->stopStream(req.stream); }
   res.success = true;

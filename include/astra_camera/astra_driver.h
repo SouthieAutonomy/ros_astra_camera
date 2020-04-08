@@ -65,6 +65,7 @@
 #include "astra_camera/GetCameraInfo.h"
 #include "astra_camera/SetIRFlood.h"
 #include "astra_camera/SwitchIRCamera.h"
+#include "astra_camera/SetCameraStream.h"
 #include <astra_camera/astra_device_type.h>
 
 #include <ros/ros.h>
@@ -154,6 +155,7 @@ private:
   ros::ServiceServer reset_ir_gain_server;
   ros::ServiceServer reset_ir_exposure_server;
   ros::ServiceServer switch_ir_camera;
+  ros::ServiceServer set_camera_stream;
 
   /** \brief reconfigure server*/
   boost::shared_ptr<ReconfigureServer> reconfigure_server_;

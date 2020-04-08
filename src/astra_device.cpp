@@ -440,6 +440,18 @@ void AstraDevice::startDepthStream()
   }
 }
 
+void AstraDevice::startStream(std::string stream){
+  if (stream == "ir" && !isIRStreamStarted()) { startIRStream(); }
+  if (stream == "depth" && !isDepthStreamStarted()) { startDepthStream(); }
+  if (stream == "rgb" && !isColorStreamStarted()) { startColorStream(); }
+}
+
+void AstraDevice::stopStream(std::string stream){
+  if (stream == "ir" && isIRStreamStarted()) { stopIRStream(); }
+  if (stream == "depth" && isDepthStreamStarted()) { stopDepthStream(); }
+  if (stream == "rgb" && isColorStreamStarted()) { stopColorStream(); }
+}
+
 void AstraDevice::stopAllStreams()
 {
   stopIRStream();

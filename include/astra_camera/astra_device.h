@@ -99,6 +99,9 @@ public:
   bool isColorStreamStarted();
   bool isDepthStreamStarted();
 
+  void startStream(std::string stream);
+  void stopStream(std::string stream);
+
   bool isImageRegistrationModeSupported() const;
   void setImageRegistrationMode(bool enabled);
   void setDepthColorSync(bool enabled);

@@ -34,10 +34,10 @@
 #include "astra_camera/astra_exception.h"
 #include "astra_camera/astra_device_type.h"
 
-#include <unistd.h>  
-#include <stdlib.h>  
-#include <stdio.h>  
-#include <sys/shm.h>  
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/shm.h>
 #include <sensor_msgs/image_encodings.h>
 #include <sensor_msgs/distortion_models.h>
 
@@ -73,7 +73,7 @@ AstraDriver::AstraDriver(ros::NodeHandle& n, ros::NodeHandle& pnh) :
   {
     bootOrder = 0;
   }
-  
+
   if (!pnh.getParam("devnums", devnums))
   {
     devnums = 1;
@@ -87,20 +87,20 @@ AstraDriver::AstraDriver(ros::NodeHandle& n, ros::NodeHandle& pnh) :
 
 		if(  bootOrder==1 )
 		{
-			if( (shmid = shmget((key_t)0401, 1, 0666|IPC_CREAT)) == -1 )   
-			{ 
+			if( (shmid = shmget((key_t)0401, 1, 0666|IPC_CREAT)) == -1 )
+			{
 				ROS_ERROR("Create Share Memory Error:%s", strerror(errno));
 			}
-			shm = (char *)shmat(shmid, 0, 0);  
+			shm = (char *)shmat(shmid, 0, 0);
 			*shm = 1;
 			initDevice();
 			ROS_INFO("*********** device_id %s already open device************************ ", device_id_.c_str());
 			*shm = 2;
 		}
-		else 	
-		{	
-			if( (shmid = shmget((key_t)0401, 1, 0666|IPC_CREAT)) == -1 )   
-			{ 
+		else
+		{
+			if( (shmid = shmget((key_t)0401, 1, 0666|IPC_CREAT)) == -1 )
+			{
 			  	ROS_ERROR("Create Share Memory Error:%s", strerror(errno));
 			}
 			shm = (char *)shmat(shmid, 0, 0);
@@ -115,21 +115,21 @@ AstraDriver::AstraDriver(ros::NodeHandle& n, ros::NodeHandle& pnh) :
 		}
 		if(  bootOrder==devnums )
 		{
-			if(shmdt(shm) == -1)  
-			{  
-				ROS_ERROR("shmdt failed\n");  
-			} 
-			if(shmctl(shmid, IPC_RMID, 0) == -1)  
-			{  
-				ROS_ERROR("shmctl(IPC_RMID) failed\n");  
+			if(shmdt(shm) == -1)
+			{
+				ROS_ERROR("shmdt failed\n");
+			}
+			if(shmctl(shmid, IPC_RMID, 0) == -1)
+			{
+				ROS_ERROR("shmctl(IPC_RMID) failed\n");
 			}
 		 }
 		 else
 		 {
-		 	if(shmdt(shm) == -1)  
-			{  
-				ROS_ERROR("shmdt failed\n");  
-			} 
+		 	if(shmdt(shm) == -1)
+			{
+				ROS_ERROR("shmdt failed\n");
+			}
 		 }
 	 }
 	 else
@@ -236,10 +236,19 @@ void AstraDriver::advertiseROSTopics()
   reset_ir_gain_server = nh_.advertiseService("reset_ir_gain", &AstraDriver::resetIRGainCb, this);
   reset_ir_exposure_server = nh_.advertiseService("reset_ir_exposure", &AstraDriver::resetIRExposureCb, this);
   get_camera_info = nh_.advertiseService("get_camera_info", &AstraDriver::getCameraInfoCb, this);
+  set_camera_stream = nh_.advertiseService("set_camera_stream", &AstraDriver::setCameraStreamCb, this);
+
   if (device_->getDeviceTypeNo() == OB_STEREO_S_NO || device_->getDeviceTypeNo() == OB_STEREO_S_U3_NO)
   {
     switch_ir_camera = nh_.advertiseService("switch_ir_camera", &AstraDriver::switchIRCameraCb, this);
   }
+}
+
+bool AstraDriver::setCameraStreamCb(astra_camera::setCameraStreamRequest &req, astra_camera::setCameraStreamResponse& res){
+  if (req.value){ device_->startStream(req.stream); }
+  if (!req.value){ device_->stopStream(req.stream); }
+  res.success = true;
+  return true;
 }
 
 bool AstraDriver::getSerialCb(astra_camera::GetSerialRequest& req, astra_camera::GetSerialResponse& res)
@@ -1027,14 +1036,14 @@ std::string AstraDriver::resolveDeviceURI(const std::string& device_id)
         it != available_device_URIs->end(); ++it)
     {
 	#if 0
-      	try 
+      	try
 	{
         	std::string serial = device_manager_->getSerial(*it);
         	if (serial.size() > 0 && device_id == serial)
           		return *it;
 	}
     	#else
-	try 
+	try
 	{
          	std::set<std::string>::iterator iter;
         	if((iter = alreadyOpen.find(*it)) == alreadyOpen.end())
@@ -1089,7 +1098,7 @@ void AstraDriver::initDevice()
     {
       std::string device_URI = resolveDeviceURI(device_id_);
       #if 0
-      if( device_URI == "" ) 
+      if( device_URI == "" )
       {
       	boost::this_thread::sleep(boost::posix_time::milliseconds(500));
       	continue;

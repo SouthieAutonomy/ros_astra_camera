@@ -49,6 +49,7 @@ add_service_files(
   GetUVCWhiteBalance.srv
   SetUVCWhiteBalance.srv
   SetUVCGain.srv
+  SetCameraStream.srv
   SetIRExposure.srv
   SetIRGain.srv
   SetIRFlood.srv

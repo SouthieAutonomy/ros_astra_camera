@@ -66,6 +66,7 @@
 #include "astra_camera/SetIRFlood.h"
 #include "astra_camera/SwitchIRCamera.h"
 #include "astra_camera/SetCameraStream.h"
+// #include "astra_camera/GetActiveStreams.h"
 #include <astra_camera/astra_device_type.h>
 
 #include <ros/ros.h>
@@ -120,6 +121,7 @@ private:
   bool switchIRCameraCb(astra_camera::SwitchIRCameraRequest& req, astra_camera::SwitchIRCameraResponse& res);
   bool setLDPCb(astra_camera::SetLDPRequest& req, astra_camera::SetLDPResponse& res);
   bool setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, astra_camera::SetCameraStreamResponse& res);
+  // bool getActiveStreamsCb(astra_camera::GetActiveStreamsRequest &req, astra_camera::GetActiveStreamsResponse& res);
 
 
   void configCb(Config &config, uint32_t level);

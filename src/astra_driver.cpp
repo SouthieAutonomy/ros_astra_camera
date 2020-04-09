@@ -247,6 +247,9 @@ void AstraDriver::advertiseROSTopics()
 bool AstraDriver::setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, astra_camera::SetCameraStreamResponse& res){
   if (req.value){ device_->startStream(req.stream); }
   if (!req.value){ device_->stopStream(req.stream); }
+
+  if (req.stream == "rgb") { rgb_preferred_ = req.value; }
+  if (req.stream == "ir" && req.value) { rgb_preferred_ = false; }
   res.success = true;
   return true;
 }

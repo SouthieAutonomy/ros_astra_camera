@@ -247,18 +247,36 @@ void AstraDriver::advertiseROSTopics()
 }
 
 bool AstraDriver::setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, astra_camera::SetCameraStreamResponse& res){
-  boost::lock_guard<boost::mutex> lock(connect_mutex_);
 
-  if (req.value){
-    mode_enabled_ = req.value;
-    // device_->startStream(req.stream);
-  }
-  if (!req.value){
-    mode_enabled_ = "";
-    // device_->stopStream(req.stream);
+  if (req.value){ mode_enabled_ = req.value; }
+  if (!req.value){ mode_enabled_ = ""; device_->stopStream(req.stream); }
+
+  bool ir_started = device_->isIRStreamStarted();
+  bool color_started = device_->isColorStreamStarted();
+
+  if (mode_enabled_ == ""){
+    if (color_started) { device_->stopColorStream(); }
+    if (ir_started) { device_->stopIRStream(); }
   }
 
-  imageConnectCb();
+  if (mode_enabled_ == "rgb"){
+    if (ir_started) { device_->stopIRStream(); }
+    if (!color_started){
+      ROS_INFO("Starting color stream.");
+      device_->setColorFrameCallback(boost::bind(&AstraDriver::newColorFrameCallback, this, _1));
+      device_->startColorStream();
+    }
+  }
+
+  if (mode_enabled_ == "ir"){
+    if (color_started) { device_->stopColorStream(); }
+    if (!ir_started){
+      ROS_INFO("Starting IR stream.");
+      device_->setIRFrameCallback(boost::bind(&AstraDriver::newIRFrameCallback, this, _1));
+      device_->startIRStream();
+    }
+  }
+
   res.success = true;
   return true;
 }

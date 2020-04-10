@@ -249,6 +249,7 @@ bool AstraDriver::setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, a
   if (req.value){ mode_enabled_ = req.stream; }
   if (!req.value){ device_->stopStream(req.stream); }
   res.success = true;
+  imageConnectCb();
   return true;
 }
 

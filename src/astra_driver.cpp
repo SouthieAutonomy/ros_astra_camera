@@ -545,8 +545,8 @@ void AstraDriver::imageConnectCb()
   ir_subscribers_ = pub_ir_.getNumSubscribers() > 0;
   color_subscribers_ = pub_color_.getNumSubscribers() > 0;
 
-  if (mode_enabled_ == "ir") { ir_subscribers_ = true; color_subscribers_ = false; }
-  if (mode_enabled_ == "rgb") { ir_subscribers_ = false; color_subscribers_ = true; }
+  if (mode_enabled_ == "ir") { rgb_preferred_ = false; ir_subscribers_ = true; color_subscribers_ = false; }
+  if (mode_enabled_ == "rgb") { rgb_preferred_ = true; ir_subscribers_ = false; color_subscribers_ = true; }
 
   if (color_subscribers_ && (!ir_subscribers_ || rgb_preferred_))
   {

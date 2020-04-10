@@ -247,13 +247,15 @@ void AstraDriver::advertiseROSTopics()
 }
 
 bool AstraDriver::setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, astra_camera::SetCameraStreamResponse& res){
+  boost::lock_guard<boost::mutex> lock(connect_mutex_);
+
   if (req.value){
     mode_enabled_ = req.value;
     // device_->startStream(req.stream);
   }
   if (!req.value){
     mode_enabled_ = "";
-    device_->stopStream(req.stream);
+    // device_->stopStream(req.stream);
   }
 
   imageConnectCb();

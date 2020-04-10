@@ -251,7 +251,10 @@ bool AstraDriver::setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, a
     mode_enabled_ = req.value;
     device_->startStream(req.stream);
   }
-  if (!req.value){ device_->stopStream(req.stream); }
+  if (!req.value){
+    mode_enabled_ = "";
+    device_->stopStream(req.stream);
+  }
 
   if (req.stream == "rgb") { rgb_preferred_ = req.value; }
   if (req.stream == "ir" && req.value) { rgb_preferred_ = false; }
@@ -554,7 +557,7 @@ void AstraDriver::imageConnectCb()
   ir_subscribers_ = pub_ir_.getNumSubscribers() > 0;
   color_subscribers_ = pub_color_.getNumSubscribers() > 0;
 
-  if (!ir_subscribers_ && !color_subscribers_){
+  if (mode_enabled_ == "" || (!ir_subscribers_ && !color_subscribers_)){
     if (color_started) { device_->stopColorStream(); }
     if (ir_started) { device_->stopIRStream(); }
   }

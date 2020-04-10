@@ -209,6 +209,7 @@ private:
   int data_skip_depth_counter_;
 
   bool rgb_preferred_;
+  std::string mode_enabled_;
 
   bool auto_exposure_;
   bool auto_white_balance_;

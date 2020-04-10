@@ -551,8 +551,8 @@ void AstraDriver::imageConnectCb()
   bool ir_started = device_->isIRStreamStarted();
   bool color_started = device_->isColorStreamStarted();
 
-  // ir_subscribers_ = pub_ir_.getNumSubscribers() > 0;
-  // color_subscribers_ = pub_color_.getNumSubscribers() > 0;
+  ir_subscribers_ = pub_ir_.getNumSubscribers() > 0;
+  color_subscribers_ = pub_color_.getNumSubscribers() > 0;
 
   if (mode_enabled_ == "" || (!ir_subscribers_ && !color_subscribers_)){
     if (color_started) { device_->stopColorStream(); }

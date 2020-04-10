@@ -151,6 +151,7 @@ AstraDriver::AstraDriver(ros::NodeHandle& n, ros::NodeHandle& pnh) :
   }
   ROS_DEBUG("Dynamic reconfigure configuration received.");
 
+  mode_enabled_ = "ir";
   advertiseROSTopics();
 }
 
@@ -245,11 +246,8 @@ void AstraDriver::advertiseROSTopics()
 }
 
 bool AstraDriver::setCameraStreamCb(astra_camera::SetCameraStreamRequest &req, astra_camera::SetCameraStreamResponse& res){
-  if (req.value){ device_->startStream(req.stream); }
+  if (req.value){ mode_enabled_ = req.stream; }
   if (!req.value){ device_->stopStream(req.stream); }
-
-  if (req.stream == "rgb") { rgb_preferred_ = req.value; }
-  if (req.stream == "ir" && req.value) { rgb_preferred_ = false; }
   res.success = true;
   return true;
 }
@@ -546,6 +544,9 @@ void AstraDriver::imageConnectCb()
 
   ir_subscribers_ = pub_ir_.getNumSubscribers() > 0;
   color_subscribers_ = pub_color_.getNumSubscribers() > 0;
+
+  if (mode_enabled_ == "ir") { ir_subscribers_ = true; color_subscribers_ = false; }
+  if (mode_enabled_ == "rgb") { ir_subscribers_ = false; color_subscribers_ = true; }
 
   if (color_subscribers_ && (!ir_subscribers_ || rgb_preferred_))
   {

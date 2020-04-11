@@ -62,6 +62,7 @@ AstraDriver::AstraDriver(ros::NodeHandle& n, ros::NodeHandle& pnh) :
     depth_raw_subscribers_(false),
     uvc_flip_(0)
 {
+  mode_enabled_ = "ir";
 
   genVideoModeTableMap();
 
@@ -151,7 +152,6 @@ AstraDriver::AstraDriver(ros::NodeHandle& n, ros::NodeHandle& pnh) :
   }
   ROS_DEBUG("Dynamic reconfigure configuration received.");
 
-  mode_enabled_ = "ir";
   advertiseROSTopics();
 }
 

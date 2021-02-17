@@ -39,24 +39,16 @@ generate_dynamic_reconfigure_options(cfg/Astra.cfg cfg/UVCCamera.cfg)
 
 add_service_files(
   FILES
-  GetSerial.srv
   GetDeviceType.srv
-  GetIRGain.srv
   GetCameraInfo.srv
   GetUVCExposure.srv
-  GetIRExposure.srv
   GetUVCGain.srv
   GetUVCWhiteBalance.srv
   SetUVCWhiteBalance.srv
   SetUVCGain.srv
-  SetIRExposure.srv
-  SetIRGain.srv
-  SetIRFlood.srv
   SetLaser.srv
   SetLDP.srv
   SetUVCExposure.srv
-  ResetIRGain.srv
-  ResetIRExposure.srv
   SwitchIRCamera.srv
 )
 

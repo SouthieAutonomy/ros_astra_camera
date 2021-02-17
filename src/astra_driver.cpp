@@ -253,7 +253,7 @@ bool AstraDriver::setCameraStreamCb(mercury::SetCameraStreamRequest &req, mercur
   return true;
 }
 
-bool AstraDriver::getSerialCb(astra_camera::GetSerialRequest& req, astra_camera::GetSerialResponse& res)
+bool AstraDriver::getSerialCb(mercury::GetSerialRequest& req, mercury::GetSerialResponse& res)
 {
   res.serial = device_manager_->getSerial(device_->getUri());
   return true;
@@ -265,25 +265,25 @@ bool AstraDriver::getDeviceTypeCb(astra_camera::GetDeviceTypeRequest& req, astra
   return true;
 }
 
-bool AstraDriver::getIRGainCb(astra_camera::GetIRGainRequest& req, astra_camera::GetIRGainResponse& res)
+bool AstraDriver::getIRGainCb(mercury::GetIRGainRequest& req, mercury::GetIRGainResponse& res)
 {
   res.gain = device_->getIRGain();
   return true;
 }
 
-bool AstraDriver::setIRGainCb(astra_camera::SetIRGainRequest& req, astra_camera::SetIRGainResponse& res)
+bool AstraDriver::setIRGainCb(mercury::SetIRGainRequest& req, mercury::SetIRGainResponse& res)
 {
   device_->setIRGain(req.gain);
   return true;
 }
 
-bool AstraDriver::getIRExposureCb(astra_camera::GetIRExposureRequest& req, astra_camera::GetIRExposureResponse& res)
+bool AstraDriver::getIRExposureCb(mercury::GetIRExposureRequest& req, mercury::GetIRExposureResponse& res)
 {
   res.exposure = device_->getIRExposure();
   return true;
 }
 
-bool AstraDriver::setIRExposureCb(astra_camera::SetIRExposureRequest& req, astra_camera::SetIRExposureResponse& res)
+bool AstraDriver::setIRExposureCb(mercury::SetIRExposureRequest& req, mercury::SetIRExposureResponse& res)
 {
   device_->setIRExposure(req.exposure);
   return true;
@@ -301,13 +301,13 @@ bool AstraDriver::setLDPCb(astra_camera::SetLDPRequest& req, astra_camera::SetLD
   return true;
 }
 
-bool AstraDriver::resetIRGainCb(astra_camera::ResetIRGainRequest& req, astra_camera::ResetIRGainResponse& res)
+bool AstraDriver::resetIRGainCb(mercury::ResetIRGainRequest& req, mercury::ResetIRGainResponse& res)
 {
   device_->setIRGain(0x8);
   return true;
 }
 
-bool AstraDriver::resetIRExposureCb(astra_camera::ResetIRExposureRequest& req, astra_camera::ResetIRExposureResponse& res)
+bool AstraDriver::resetIRExposureCb(mercury::ResetIRExposureRequest& req, mercury::ResetIRExposureResponse& res)
 {
   device_->setIRExposure(0x419);
   return true;
@@ -319,7 +319,7 @@ bool AstraDriver::getCameraInfoCb(astra_camera::GetCameraInfoRequest& req, astra
   return true;
 }
 
-bool AstraDriver::setIRFloodCb(astra_camera::SetIRFloodRequest& req, astra_camera::SetIRFloodResponse& res)
+bool AstraDriver::setIRFloodCb(mercury::SetIRFloodRequest& req, mercury::SetIRFloodResponse& res)
 {
   device_->setIRFlood(req.enable);
   return true;

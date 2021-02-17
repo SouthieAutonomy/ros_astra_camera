@@ -33,6 +33,7 @@
 #ifndef ASTRA_DRIVER_H
 #define ASTRA_DRIVER_H
 
+#include <ros/ros.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/bind.hpp>
@@ -49,27 +50,26 @@
 #include <string>
 #include <vector>
 
-#include "astra_camera/astra_device_manager.h"
-#include "astra_camera/astra_device.h"
-#include "astra_camera/astra_video_mode.h"
-#include "astra_camera/GetSerial.h"
+#include <astra_camera/astra_device_manager.h>
+#include <astra_camera/astra_device.h>
+#include <astra_camera/astra_video_mode.h>
+#include <astra_camera/astra_device_type.h>
+
 #include "astra_camera/GetDeviceType.h"
-#include "astra_camera/GetIRGain.h"
-#include "astra_camera/SetIRGain.h"
-#include "astra_camera/GetIRExposure.h"
-#include "astra_camera/SetIRExposure.h"
 #include "astra_camera/SetLaser.h"
 #include "astra_camera/SetLDP.h"
-#include "astra_camera/ResetIRGain.h"
-#include "astra_camera/ResetIRExposure.h"
 #include "astra_camera/GetCameraInfo.h"
-#include "astra_camera/SetIRFlood.h"
 #include "astra_camera/SwitchIRCamera.h"
 
 #include <mercury/SetCameraStream.h>
-#include <astra_camera/astra_device_type.h>
-
-#include <ros/ros.h>
+#include <mercury/GetSerial.h>
+#include <mercury/GetIRGain.h>
+#include <mercury/SetIRGain.h>
+#include <mercury/GetIRExposure.h>
+#include <mercury/SetIRExposure.h>
+#include <mercury/ResetIRGain.h>
+#include <mercury/ResetIRExposure.h>
+#include <mercury/SetIRFlood.h>
 
 namespace astra_wrapper
 {
@@ -107,17 +107,17 @@ private:
   void imageConnectCb();
   void depthConnectCb();
 
-  bool getSerialCb(astra_camera::GetSerialRequest& req, astra_camera::GetSerialResponse& res);
+  bool getSerialCb(mercury::GetSerialRequest& req, mercury::GetSerialResponse& res);
   bool getDeviceTypeCb(astra_camera::GetDeviceTypeRequest& req, astra_camera::GetDeviceTypeResponse& res);
-  bool getIRGainCb(astra_camera::GetIRGainRequest& req, astra_camera::GetIRGainResponse& res);
-  bool setIRGainCb(astra_camera::SetIRGainRequest& req, astra_camera::SetIRGainResponse& res);
-  bool getIRExposureCb(astra_camera::GetIRExposureRequest& req, astra_camera::GetIRExposureResponse& res);
-  bool setIRExposureCb(astra_camera::SetIRExposureRequest& req, astra_camera::SetIRExposureResponse& res);
+  bool getIRGainCb(mercury::GetIRGainRequest& req, mercury::GetIRGainResponse& res);
+  bool setIRGainCb(mercury::SetIRGainRequest& req, mercury::SetIRGainResponse& res);
+  bool getIRExposureCb(mercury::GetIRExposureRequest& req, mercury::GetIRExposureResponse& res);
+  bool setIRExposureCb(mercury::SetIRExposureRequest& req, mercury::SetIRExposureResponse& res);
   bool setLaserCb(astra_camera::SetLaserRequest& req, astra_camera::SetLaserResponse& res);
-  bool resetIRGainCb(astra_camera::ResetIRGainRequest& req, astra_camera::ResetIRGainResponse& res);
-  bool resetIRExposureCb(astra_camera::ResetIRExposureRequest& req, astra_camera::ResetIRExposureResponse& res);
+  bool resetIRGainCb(mercury::ResetIRGainRequest& req, mercury::ResetIRGainResponse& res);
+  bool resetIRExposureCb(mercury::ResetIRExposureRequest& req, mercury::ResetIRExposureResponse& res);
   bool getCameraInfoCb(astra_camera::GetCameraInfoRequest& req, astra_camera::GetCameraInfoResponse& res);
-  bool setIRFloodCb(astra_camera::SetIRFloodRequest& req, astra_camera::SetIRFloodResponse& res);
+  bool setIRFloodCb(mercury::SetIRFloodRequest& req, mercury::SetIRFloodResponse& res);
   bool switchIRCameraCb(astra_camera::SwitchIRCameraRequest& req, astra_camera::SwitchIRCameraResponse& res);
   bool setLDPCb(astra_camera::SetLDPRequest& req, astra_camera::SetLDPResponse& res);
   bool setCameraStreamCb(mercury::SetCameraStreamRequest &req, mercury::SetCameraStreamResponse& res);
